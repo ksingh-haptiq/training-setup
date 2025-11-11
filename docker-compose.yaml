@@ -46,7 +46,8 @@ services:
       - "4200:4200"
     volumes:
       - ./prefect_data:/home/prefect/.prefect
-      - /Users/karnjot.singh/Desktop/dbt_demo/training-setup:/usr/app
+      # Change the path to your local path
+      - /path/to/project:/usr/app
     depends_on:
       db:
         condition: service_healthy
@@ -75,7 +76,8 @@ services:
     container_name: prefect_worker
     volumes:
       - ./prefect_data:/home/prefect/.prefect
-      - /Users/karnjot.singh/Desktop/dbt_demo/training-setup:/usr/app
+      # Change the path to your local path
+      - /path/to/project:/usr/app
     depends_on:
       prefect:
         condition: service_started

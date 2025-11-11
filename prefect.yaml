@@ -19,11 +19,26 @@ pull:
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: hello
+- name: demo
   version:
   tags: []
   description: Simple hello world flow for testing Prefect setup.
   entrypoint: flows/hello.py:hello
+  parameters: {}
+  work_pool:
+    name: local-pool
+    work_queue_name:
+    job_variables: {}
+  schedules:
+  - interval: 600.0
+    anchor_date: '2025-11-10T13:33:41.828071+00:00'
+    timezone: UTC
+    active: true
+- name: users_etl
+  version:
+  tags: []
+  description:
+  entrypoint: flows/demo.py:main
   parameters: {}
   work_pool:
     name: local-pool

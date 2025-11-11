@@ -16,7 +16,9 @@ RUN pip install --no-cache-dir dbt-postgres
 # Install Python dependencies for Prefect flows
 RUN pip install --no-cache-dir \
     psycopg2-binary \
-    requests
+    requests \
+    sqlalchemy \
+    pandas
 
 # Create app directory with proper permissions
 # Make it accessible to any user (volume mounts will override permissions anyway)
