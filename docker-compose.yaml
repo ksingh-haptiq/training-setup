@@ -23,4 +23,5 @@ services:
     working_dir: /usr/app
     tty: true
     environment:
-      DBT_PROFILES_DIR: /usr/app
+      DBT_PROFILES_DIR: /usr/app/dbt_demo
+      DBT_PROJECT_DIR: /usr/app/dbt_demo
