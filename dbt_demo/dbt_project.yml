@@ -16,7 +16,6 @@ seeds:
 
 models:
   dbt_demo:
+    +materialized: table
     staging_trial_balances:
-      materialized: incremental
-    marts:
-      materialized: table
+      +materialized: incremental

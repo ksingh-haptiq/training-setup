@@ -49,3 +49,57 @@ To make it more flexible and reusable, consider extending it with additional fun
 
 **Question:**  
 *How can you modify the `transform()` task so that it can accept parameters (for example, `drop_columns` or `rename_columns`) and handle different API responses without changing the core flow code? You can create and add your own scenarios too.*
+
+
+## 🧪 Prefect Exercise: Run dbt Tests
+
+This exercise uses the flow `flows/prefect_dbt_run.py` to seed data, run models.
+### 1. Parameters
+- `full_refresh` (bool): Pass True to include `--full-refresh` when seeding.
+- `seed_name` (str|None): Single seed to run. If omitted, all discovered seeds run (without `--select`)
+
+### 2. Run Inside Prefect Docker Container
+```bash
+docker compose exec prefect bash -lc "python -m flows.prefect_dbt_run"
+```
+
+### 3. Exercise: Implement dbt test task
+
+Open `flows/prefect_dbt_run.py` and locate the stubbed task:
+```python
+@task
+def run_dbt_tests(model_selection: str | None = None):
+	"""EXERCISE: Implement dbt test execution."""
+	# TODO: build command and run via DbtCoreOperation
+	pass
+```
+
+Complete the TODO:
+1. Accept optional model_selection; if None or '*', run all tests.
+2. Construct command:
+   - All tests: `dbt test`
+   - Selected: `dbt test --select <space-separated-models>`
+3. Execute with `DbtCoreOperation(commands=[command], project_dir=..., profiles_dir=...)`.
+4. Log command before running.
+5. Return the raw result.
+6. (Optional) Implement a success heuristic to raise on failure.
+
+Then add a `run_tests: bool = False` parameter to the flow:
+```python
+@flow
+def prefect_dbt_flow_run(run_tests: bool = False, ...):
+	...
+	if run_tests:
+		run_dbt_tests(model_selection)
+```
+
+Run examples after implementation:
+```bash
+python -m flows.prefect_dbt_run
+python -m flows.prefect_dbt_run --run-tests true
+```
+
+
+---
+
+````

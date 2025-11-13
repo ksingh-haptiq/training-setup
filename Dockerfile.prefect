@@ -10,8 +10,11 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install dbt and Postgres adapter (install as root, accessible to all users)
-RUN pip install --no-cache-dir dbt-postgres
+# Install dbt + prefect client libs (ensure prefect 2.x to match base image) and Postgres adapter
+RUN pip install --no-cache-dir \
+    "prefect>=2.20,<3" \
+    "prefect-dbt>=0.4,<0.5" \
+    dbt-postgres
 
 # Install Python dependencies for Prefect flows
 RUN pip install --no-cache-dir \
